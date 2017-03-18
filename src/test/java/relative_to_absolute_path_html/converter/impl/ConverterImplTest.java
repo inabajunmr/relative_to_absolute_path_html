@@ -21,7 +21,8 @@ public class ConverterImplTest {
 	Reader reader = new ReaderImpl();
 
 	private final String TEST_FILE_DIR = "src/test/resources/relative_to_absolute_path_html/converter";
-	private final String TEST_FILE_NAME = "test1.txt";
+	private final String TEST_FILE_NAME_1 = "test1.txt";
+	private final String TEST_FILE_NAME_2 = "test2.txt";
 
 	private final String BR_N = "\n";
 
@@ -54,12 +55,37 @@ public class ConverterImplTest {
 
 	@Test
 	public void 正常系_パスの変換() throws IOException {
-		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME, Charset.defaultCharset()));
+		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_1, Charset.defaultCharset()));
 		String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
 
 		StringBuilder expected = new StringBuilder();
 		expected.append("<html>").append(BR_N);
 		expected.append("<head></head>").append(BR_N);
+		expected.append("<body>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"https://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test2/test3/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test2/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test\"></a>").append(BR_N);
+		expected.append("</body>").append(BR_N);
+		expected.append("</html>");
+
+		//パーサーがインデントをつけてくるので削除して比較する
+		assertEquals(expected.toString(), result.replaceAll(" +<", "<").replaceAll("> +", ">"));
+	}
+
+	@Test
+	public void 正常系_パスの変換_デフォルト() throws IOException {
+		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_2, Charset.defaultCharset()));
+		String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
+
+		StringBuilder expected = new StringBuilder();
+		expected.append("<html>").append(BR_N);
+		expected.append("<head>").append(BR_N);
+		expected.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://test.com/test1/test2/test3/xxx.css\">").append(BR_N);
+		expected.append("<script type=\"text/javascript\" src=\"http://test.com/test1/test2/test3/test.js\"></script>").append(BR_N);
+		expected.append("</head>").append(BR_N);
 		expected.append("<body>").append(BR_N);
 		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
 		expected.append("<a href=\"https://test.com/test\"></a>").append(BR_N);

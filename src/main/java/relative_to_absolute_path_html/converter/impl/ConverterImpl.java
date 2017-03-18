@@ -16,10 +16,6 @@ import relative_to_absolute_path_html.converter.Converter;
 
 public class ConverterImpl implements Converter {
 
-	final static String PATTERN_1 = "(<\\s*";
-	final static String PATTERN_2 = "\\s*";
-	final static String PATTERN_3 = "\\s*=[\"'])([^\"']+)([\"'][^>]*>)";
-
 	Logger log = LoggerFactory.getLogger(ConverterImpl.class);
 
 	@Override
@@ -47,7 +43,6 @@ public class ConverterImpl implements Converter {
 					element.attr(attribute, absoluteUrl);
 				}
 			}
-
 		}
 
 		return doc.outerHtml();

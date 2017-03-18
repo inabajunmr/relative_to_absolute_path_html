@@ -1,0 +1,14 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="xxx.css"/>
+<script type="text/javascript" src="test.js"/>
+</head>
+<body>
+<a href="http://test.com/test"></a>
+<a href="https://test.com/test"></a>
+<a href="test"></a>
+<a href="/test"></a>
+<a href="../test"></a>
+<a href="../../test"></a>
+</body>
+</html>
