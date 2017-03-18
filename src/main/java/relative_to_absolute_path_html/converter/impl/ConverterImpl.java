@@ -30,11 +30,15 @@ public class ConverterImpl implements Converter {
 		for(ConvertTarget target : cond.getTargets()){
 			Elements elements = doc.getElementsByTag(target.getTag());
 			for(Element element : elements){
+				//タグに設定された全部の属性を変換
 				for(String attribute : target.getAttributes()){
-					String url = element.attr(attribute);
-					if(url == null || url.isEmpty()){
+					if(!element.hasAttr(attribute)){
+						//対象の属性が存在しなければスキップ
 						continue;
 					}
+
+					//属性に対してURLを取得
+					String url = element.attr(attribute);
 
 					//URLを絶対パスに変換する
 					String absoluteUrl = convertRelativeToAbsolutePath(cond.getUrl(), url);
