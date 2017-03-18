@@ -18,14 +18,6 @@ public class ReaderImpl implements Reader {
 			throw new IllegalArgumentException("conditionがnullです。");
 		}
 
-		if(condition.charSet == null){
-			throw new IllegalArgumentException("condition.charSetがnullです。");
-		}
-
-		if(condition.targetFilePath == null){
-			throw new IllegalArgumentException("condition.targetFilePathがnullです。");
-		}
-
 		//改行も含めて読み込みたいのでByteで読み込んでから復号
 		Path path = FileSystems.getDefault().getPath(condition.targetFilePath);
 		byte[] resultLines = Files.readAllBytes(path);
