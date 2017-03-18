@@ -12,13 +12,12 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import relative_to_absolute_path_html.converter.ConvertCondition;
-import relative_to_absolute_path_html.converter.Converter;
 import relative_to_absolute_path_html.reader.ReadTargetCondition;
 import relative_to_absolute_path_html.reader.Reader;
 import relative_to_absolute_path_html.reader.impl.ReaderImpl;
 
 public class ConverterImplTest {
-	Converter converter = new ConverterImpl();
+	ConverterImpl converter = new ConverterImpl();
 	Reader reader = new ReaderImpl();
 
 	private final String TEST_FILE_DIR = "src/test/resources/relative_to_absolute_path_html/converter";
@@ -69,17 +68,83 @@ public class ConverterImplTest {
 		expected.append("</body>").append(BR_N);
 		assertEquals(expected, result);
 	}
+	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと、タグのインデントが様々な感じでも動くこと
 
 	@Test
-	public void test(){
-		String pattern = "(<\\s*a\\s*href\\s*=[\"'])([^\"']+)([\"'][^>]*>)";
-//		String pattern = "(<a href='([^']+)'[^>]*>)";
-		String resultPattern = "$1aaaa$2vbb$3";
-		String url = "<a href='test'>";
-		System.out.println(url.replaceAll(pattern, resultPattern));
+	public void convertRelativeToAbsolutePath_異常系_引数が全てnull() throws MalformedURLException{
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("sourceUrlは必須です。");
 
+		converter.convertRelativeToAbsolutePath(null, null);
 	}
 
-	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと、タグのインデントが様々な感じでも動くこと
+	@Test
+	public void convertRelativeToAbsolutePath_異常系_sourceUrlがnull() throws MalformedURLException{
+		thrown.expect(IllegalArgumentException.class);
+		thrown.expectMessage("sourceUrlは必須です。");
+
+		converter.convertRelativeToAbsolutePath(null, "test");
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_targetUrlがnull() throws MalformedURLException{
+		String result = converter.convertRelativeToAbsolutePath(new URL("http://test.com/test1/test2/test3/test.html"), null);
+
+		//結果が変わらないこと
+		assertNull(result);
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_絶対パス_http() throws MalformedURLException{
+		final String path = "http://test.com/test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("http://test.com/test1/test2/test3/test.html"), path);
+
+		//結果が変わらないこと
+		assertEquals(path, result);
+	}
+
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_絶対パス_https() throws MalformedURLException{
+		final String path = "https://test.com/test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("https://test.com/test1/test2/test3/test.html"), path);
+
+		//結果が変わらないこと
+		assertEquals(path, result);
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_相対パス_スラッシュなし() throws MalformedURLException{
+		final String path = "test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("https://test.com/test1/test2/test3/test.html"), path);
+
+		assertEquals("https://test.com/test1/test2/test3/test", result);
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_相対パス_スラッシュあり() throws MalformedURLException{
+		final String path = "/test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("https://test.com/test1/test2/test3/test.html"), path);
+
+		assertEquals("https://test.com/test", result);
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_相対パス_階層1() throws MalformedURLException{
+		final String path = "../test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("http://test.com/test1/test2/test"), path);
+
+		assertEquals("http://test.com/test1/test", result);
+	}
+
+	@Test
+	public void convertRelativeToAbsolutePath_正常系_相対パス_階層2() throws MalformedURLException{
+		final String path = "../test";
+		String result = converter.convertRelativeToAbsolutePath(new URL("http://test.com/test1/test2/test"), path);
+
+		assertEquals("http://test.com/test1/test", result);
+	}
+
+
 
 }
