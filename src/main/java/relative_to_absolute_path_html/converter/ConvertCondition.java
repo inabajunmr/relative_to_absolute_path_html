@@ -1,6 +1,7 @@
 package relative_to_absolute_path_html.converter;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,6 +11,25 @@ import java.util.List;
  *
  */
 public class ConvertCondition {
+	private static List<ConvertTarget> defaultTargets;
+
+	/**
+	 * 変換対象のターゲットを一般的なものに最初から搭載
+	 * @param url
+	 */
+	public ConvertCondition(URL url) {
+		super();
+		this.url = url;
+		if(defaultTargets == null){
+			defaultTargets = new ArrayList<>();
+			defaultTargets.add(new ConvertTarget("a", "href"));
+			defaultTargets.add(new ConvertTarget("link", "href"));
+			defaultTargets.add(new ConvertTarget("script", "src"));
+		}
+
+		this.targets = Collections.unmodifiableList(defaultTargets);
+	}
+
 	public ConvertCondition(List<ConvertTarget> targets, URL url) {
 		super();
 		this.targets = Collections.unmodifiableList(targets);
