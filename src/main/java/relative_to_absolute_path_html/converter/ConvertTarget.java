@@ -8,6 +8,14 @@ package relative_to_absolute_path_html.converter;
  *
  */
 public class ConvertTarget {
+	public String getTag() {
+		return tag;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
 	public ConvertTarget(String tag, String attribute) {
 		super();
 		this.tag = tag;
@@ -17,11 +25,10 @@ public class ConvertTarget {
 	/**
 	 * タグ名
 	 */
-	public String tag;
+	private String tag;
 
 	/**
 	 * 属性名
 	 */
-	public String attribute;
-
+	private String attribute;
 }
