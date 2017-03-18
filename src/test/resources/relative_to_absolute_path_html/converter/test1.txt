@@ -1,0 +1,8 @@
+<body>
+<a href="http://test.com/test"></a>
+<a href="https://test.com/test"></a>
+<a href="test"></a>
+<a href="/test"></a>
+<a href="../test"></a>
+<a href="../../test"></a>
+</body>
