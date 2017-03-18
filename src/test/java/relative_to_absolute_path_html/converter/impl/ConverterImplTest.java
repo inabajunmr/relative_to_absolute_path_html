@@ -58,15 +58,20 @@ public class ConverterImplTest {
 		String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
 
 		StringBuilder expected = new StringBuilder();
+		expected.append("<html>").append(BR_N);
+		expected.append("<head></head>").append(BR_N);
 		expected.append("<body>").append(BR_N);
-		expected.append("<a href='http://test.com/test'></a>").append(BR_N);
-		expected.append("<a href='https://test.com/test'></a>").append(BR_N);
-		expected.append("<a href='http://test.com/test1/tset2/test3/test'></a>").append(BR_N);
-		expected.append("<a href='http://test.com/test'></a>").append(BR_N);
-		expected.append("<a href='http://test.com/test1/test2/test'></a>").append(BR_N);
-		expected.append("<a href='http://test.com/test1/test'></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"https://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test2/test3/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test2/test\"></a>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test1/test\"></a>").append(BR_N);
 		expected.append("</body>").append(BR_N);
-		assertEquals(expected, result);
+		expected.append("</html>");
+
+		//パーサーがインデントをつけてくるので削除して比較する
+		assertEquals(expected.toString(), result.replaceAll(" +<", "<").replaceAll("> +", ">"));
 	}
 	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと、タグのインデントが様々な感じでも動くこと
 

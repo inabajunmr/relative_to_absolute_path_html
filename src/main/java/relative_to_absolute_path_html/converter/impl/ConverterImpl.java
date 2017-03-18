@@ -32,29 +32,25 @@ public class ConverterImpl implements Converter {
 
 		//全ての対象タグ・属性をループしながら変換
 		for(ConvertTarget target : cond.getTargets()){
-			//			StringBuilder patternString = new StringBuilder();
-			//			patternString.append(PATTERN_1).append(target.getTag()).append(PATTERN_2).append(target.getAttribute()).append(PATTERN_3);
-			//			Pattern pattern = Pattern.compile(patternString.toString());
-			//			Matcher matcher = pattern.matcher(htmlStr);
-			//			matcher.
-
 			Elements elements = doc.getElementsByTag(target.getTag());
 			for(Element element : elements){
 				for(String attribute : target.getAttributes()){
-					String value = element.attr(attribute);
-					if(value == null || value.isEmpty()){
+					String url = element.attr(attribute);
+					if(url == null || url.isEmpty()){
 						continue;
 					}
 
 					//URLを絶対パスに変換する
-					//エレメントから属性を削除
-					//変換後のURLで属性を追加
+					String absoluteUrl = convertRelativeToAbsolutePath(cond.getUrl(), url);
+
+					//elementのURLを変換後のURLに設定し直す
+					element.attr(attribute, absoluteUrl);
 				}
 			}
 
 		}
 
-		return null;
+		return doc.outerHtml();
 	}
 
 
