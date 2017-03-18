@@ -19,6 +19,9 @@ public class ConvertCondition {
 	 */
 	public ConvertCondition(URL url) {
 		super();
+		if(url == null){
+			throw new IllegalArgumentException("URLは必須です。");
+		}
 		this.url = url;
 		if(defaultTargets == null){
 			defaultTargets = new ArrayList<>();
