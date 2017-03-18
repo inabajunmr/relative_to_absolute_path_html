@@ -26,7 +26,7 @@ public class ReaderImplTest {
 
 	Reader reader = new ReaderImpl();
 
-	private final String TEST_FILE_DIR = "src/test/resources/relative_to_absolute_path_html.reader/impl/";
+	private final String TEST_FILE_DIR = "src/test/resources/relative_to_absolute_path_html/reader";
 	private final String TEST_FILE_NAME = "test.txt";
 	Path TEST_FILE_PATH = FileSystems.getDefault().getPath(TEST_FILE_DIR, TEST_FILE_NAME);
 
