@@ -1,12 +1,26 @@
 package relative_to_absolute_path_html.reader;
 
+import java.nio.charset.Charset;
+
 /**
  * ファイルの読み込み条件
  * @author inabajunmr
  */
 public class ReadTargetCondition {
 
-	public ReadTargetCondition(String targetFileDir, String targetFileName, String charSet) {
+	public String getTargetFileDir() {
+		return targetFileDir;
+	}
+
+	public String getTargetFileName() {
+		return targetFileName;
+	}
+
+	public Charset getCharSet() {
+		return charSet;
+	}
+
+	public ReadTargetCondition(String targetFileDir, String targetFileName, Charset charSet) {
 		super();
 
 		if(targetFileDir == null || targetFileName == null || charSet == null){
@@ -20,15 +34,15 @@ public class ReadTargetCondition {
 	/**
 	 * 対象ファイルの配置先ディレクトリ
 	 */
-	public String targetFileDir;
+	private String targetFileDir;
 
 	/**
 	 * 対象ファイルのファイル名
 	 */
-	public String targetFileName;
+	private String targetFileName;
 
 	/**
 	 * 対象ファイルの文字コード
 	 */
-	public String charSet;
+	private Charset charSet;
 }
