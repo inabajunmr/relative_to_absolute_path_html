@@ -70,6 +70,16 @@ public class ConverterImplTest {
 		assertEquals(expected, result);
 	}
 
-	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと
+	@Test
+	public void test(){
+		String pattern = "(<\\s*a\\s*href\\s*=[\"'])([^\"']+)([\"'][^>]*>)";
+//		String pattern = "(<a href='([^']+)'[^>]*>)";
+		String resultPattern = "$1aaaa$2vbb$3";
+		String url = "<a href='test'>";
+		System.out.println(url.replaceAll(pattern, resultPattern));
+
+	}
+
+	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと、タグのインデントが様々な感じでも動くこと
 
 }
