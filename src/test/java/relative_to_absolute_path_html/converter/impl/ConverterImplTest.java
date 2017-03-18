@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import relative_to_absolute_path_html.converter.ConvertCondition;
+import relative_to_absolute_path_html.converter.ConvertTarget;
 import relative_to_absolute_path_html.reader.ReadTargetCondition;
 import relative_to_absolute_path_html.reader.Reader;
 import relative_to_absolute_path_html.reader.impl.ReaderImpl;
@@ -99,7 +102,34 @@ public class ConverterImplTest {
 		//パーサーがインデントをつけてくるので削除して比較する
 		assertEquals(expected.toString(), result.replaceAll(" +<", "<").replaceAll("> +", ">"));
 	}
-	//TODO 指定したタグで動くこと、デフォルトがちゃんと動くこと、同一行にURLが複数あっても動くこと、URLのくくり文字がダブルクオートでも動くこと、タグのインデントが様々な感じでも動くこと
+
+
+	@Test
+	public void 正常系_パスの変換_指定値() throws IOException {
+		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_2, Charset.defaultCharset()));
+		ConvertCondition cond = new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html"));
+		ConvertTarget target = new ConvertTarget("link", new ArrayList<>(Arrays.asList("href")));
+		String result = converter.convert(htmlStr, new ConvertCondition(new ArrayList<>(Arrays.asList(target)), new URL("http://test.com/test1/test2/test3/test.html")));
+
+		StringBuilder expected = new StringBuilder();
+		expected.append("<html>").append(BR_N);
+		expected.append("<head>").append(BR_N);
+		expected.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://test.com/test1/test2/test3/xxx.css\">").append(BR_N);
+		expected.append("<script type=\"text/javascript\" src=\"test.js\"></script>").append(BR_N);
+		expected.append("</head>").append(BR_N);
+		expected.append("<body>").append(BR_N);
+		expected.append("<a href=\"http://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"https://test.com/test\"></a>").append(BR_N);
+		expected.append("<a href=\"test\"></a>").append(BR_N);
+		expected.append("<a href=\"/test\"></a>").append(BR_N);
+		expected.append("<a href=\"../test\"></a>").append(BR_N);
+		expected.append("<a href=\"../../test\"></a>").append(BR_N);
+		expected.append("</body>").append(BR_N);
+		expected.append("</html>");
+
+		//パーサーがインデントをつけてくるので削除して比較する
+		assertEquals(expected.toString(), result.replaceAll(" +<", "<").replaceAll("> +", ">"));
+	}
 
 	@Test
 	public void convertRelativeToAbsolutePath_異常系_引数が全てnull() throws MalformedURLException{
