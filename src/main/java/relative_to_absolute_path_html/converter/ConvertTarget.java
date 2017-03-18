@@ -1,5 +1,8 @@
 package relative_to_absolute_path_html.converter;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * HTMLファイル内の属性を指定する<BR>
  * <a href="test">のtestを対象とする場合、tag=a, attribute=href<br>
@@ -12,14 +15,14 @@ public class ConvertTarget {
 		return tag;
 	}
 
-	public String getAttribute() {
-		return attribute;
+	public List<String> getAttributes() {
+		return attributes;
 	}
 
-	public ConvertTarget(String tag, String attribute) {
+	public ConvertTarget(String tag, List<String> attribute) {
 		super();
 		this.tag = tag;
-		this.attribute = attribute;
+		this.attributes = Collections.unmodifiableList(attribute);
 	}
 
 	/**
@@ -30,5 +33,5 @@ public class ConvertTarget {
 	/**
 	 * 属性名
 	 */
-	private String attribute;
+	private List<String> attributes;
 }
