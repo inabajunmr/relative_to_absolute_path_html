@@ -6,20 +6,26 @@ package relative_to_absolute_path_html.reader;
  */
 public class ReadTargetCondition {
 
-	public ReadTargetCondition(String targetFilePath, String charSet) {
+	public ReadTargetCondition(String targetFileDir, String targetFileName, String charSet) {
 		super();
 
-		if(targetFilePath == null || charSet == null){
+		if(targetFileDir == null || targetFileName == null || charSet == null){
 			throw new IllegalArgumentException("ファイルパス及び文字コードは必須です。");
 		}
-		this.targetFilePath = targetFilePath;
+		this.targetFileDir = targetFileDir;
+		this.targetFileName = targetFileName;
 		this.charSet = charSet;
 	}
 
 	/**
-	 * ファイルパス
+	 * 対象ファイルの配置先ディレクトリ
 	 */
-	public String targetFilePath;
+	public String targetFileDir;
+
+	/**
+	 * 対象ファイルのファイル名
+	 */
+	public String targetFileName;
 
 	/**
 	 * 対象ファイルの文字コード

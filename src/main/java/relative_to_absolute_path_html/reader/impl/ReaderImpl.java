@@ -19,7 +19,7 @@ public class ReaderImpl implements Reader {
 		}
 
 		//改行も含めて読み込みたいのでByteで読み込んでから復号
-		Path path = FileSystems.getDefault().getPath(condition.targetFilePath);
+		Path path = FileSystems.getDefault().getPath(condition.targetFileDir, condition.targetFileName);
 		byte[] resultLines = Files.readAllBytes(path);
 		try{
 			return new String(resultLines, condition.charSet);

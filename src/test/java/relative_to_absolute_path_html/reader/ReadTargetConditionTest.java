@@ -14,7 +14,15 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition(null,null);
+        new ReadTargetCondition(null,null,null);
+	}
+
+	@Test
+	public void ディレクトリのパスがnull() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("ファイルパス及び文字コードは必須です。");
+
+        new ReadTargetCondition("test", null, Charset.defaultCharset().name());
 	}
 
 	@Test
@@ -22,7 +30,7 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition(null, Charset.defaultCharset().name());
+        new ReadTargetCondition(null, "test", Charset.defaultCharset().name());
 	}
 
 	@Test
@@ -30,6 +38,6 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition("/test/test", null);
+        new ReadTargetCondition("test", "/test/test", null);
 	}
 }
