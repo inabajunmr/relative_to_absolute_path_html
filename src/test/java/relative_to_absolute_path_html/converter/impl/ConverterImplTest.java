@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -58,7 +59,8 @@ public class ConverterImplTest {
 
 	@Test
 	public void 正常系_パスの変換() throws IOException {
-		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_1, Charset.defaultCharset()));
+
+		String htmlStr = reader.read(new ReadTargetCondition(Paths.get(TEST_FILE_DIR, TEST_FILE_NAME_1), Charset.defaultCharset()));
 		String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
 
 		StringBuilder expected = new StringBuilder();
@@ -80,7 +82,7 @@ public class ConverterImplTest {
 
 	@Test
 	public void 正常系_パスの変換_デフォルト() throws IOException {
-		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_2, Charset.defaultCharset()));
+		String htmlStr = reader.read(new ReadTargetCondition(Paths.get(TEST_FILE_DIR, TEST_FILE_NAME_2), Charset.defaultCharset()));
 		String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
 
 		StringBuilder expected = new StringBuilder();
@@ -106,7 +108,7 @@ public class ConverterImplTest {
 
 	@Test
 	public void 正常系_パスの変換_指定値() throws IOException {
-		String htmlStr = reader.read(new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME_2, Charset.defaultCharset()));
+		String htmlStr = reader.read(new ReadTargetCondition(Paths.get(TEST_FILE_DIR, TEST_FILE_NAME_2), Charset.defaultCharset()));
 		ConvertCondition cond = new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html"));
 		ConvertTarget target = new ConvertTarget("link", new ArrayList<>(Arrays.asList("href")));
 		String result = converter.convert(htmlStr, new ConvertCondition(new ArrayList<>(Arrays.asList(target)), new URL("http://test.com/test1/test2/test3/test.html")));

@@ -9,6 +9,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ReaderImplTest {
 	public void ファイルが存在しない() throws IOException {
 		thrown.expect(NoSuchFileException.class);
 		final String TARGET_FILE_NAME = "none";
-		reader.read(new ReadTargetCondition(TEST_FILE_DIR ,TARGET_FILE_NAME, Charset.defaultCharset()));
+		reader.read(new ReadTargetCondition(Paths.get(TEST_FILE_DIR ,TARGET_FILE_NAME), Charset.defaultCharset()));
 	}
 
 	@Test
@@ -62,7 +63,7 @@ public class ReaderImplTest {
 		List<String> lines = new ArrayList<>();
 		lines.add(sb.toString());
 		Files.write(TEST_FILE_PATH, sb.toString().getBytes(StandardCharsets.UTF_8), StandardOpenOption.CREATE);
-		ReadTargetCondition cond = new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME, StandardCharsets.UTF_8);
+		ReadTargetCondition cond = new ReadTargetCondition(Paths.get(TEST_FILE_DIR ,TEST_FILE_NAME), StandardCharsets.UTF_8);
 		String result = reader.read(cond);
 		assertEquals(sb.toString(), result);
 	}
@@ -81,7 +82,7 @@ public class ReaderImplTest {
 		List<String> lines = new ArrayList<>();
 		lines.add(sb.toString());
 		Files.write(TEST_FILE_PATH, sb.toString().getBytes(Charset.forName("MS932")), StandardOpenOption.CREATE);
-		ReadTargetCondition cond = new ReadTargetCondition(TEST_FILE_DIR, TEST_FILE_NAME, Charset.forName("MS932"));
+		ReadTargetCondition cond = new ReadTargetCondition(Paths.get(TEST_FILE_DIR ,TEST_FILE_NAME), Charset.forName("MS932"));
 		String result = reader.read(cond);
 		assertEquals(sb.toString(), result);
 	}

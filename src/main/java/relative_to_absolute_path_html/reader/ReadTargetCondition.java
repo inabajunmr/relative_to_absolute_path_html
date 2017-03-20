@@ -1,6 +1,7 @@
 package relative_to_absolute_path_html.reader;
 
 import java.nio.charset.Charset;
+import java.nio.file.Path;
 
 /**
  * ファイルの読み込み条件
@@ -8,38 +9,28 @@ import java.nio.charset.Charset;
  */
 public class ReadTargetCondition {
 
-	public String getTargetFileDir() {
-		return targetFileDir;
-	}
-
-	public String getTargetFileName() {
-		return targetFileName;
-	}
-
 	public Charset getCharSet() {
 		return charSet;
 	}
 
-	public ReadTargetCondition(String targetFileDir, String targetFileName, Charset charSet) {
+	public ReadTargetCondition(Path targetFilePath, Charset charSet) {
 		super();
 
-		if(targetFileDir == null || targetFileName == null || charSet == null){
+		if(targetFilePath == null || charSet == null){
 			throw new IllegalArgumentException("ファイルパス及び文字コードは必須です。");
 		}
-		this.targetFileDir = targetFileDir;
-		this.targetFileName = targetFileName;
+		this.targetFilePath = targetFilePath;
 		this.charSet = charSet;
 	}
 
-	/**
-	 * 対象ファイルの配置先ディレクトリ
-	 */
-	private String targetFileDir;
+	public Path getTargetFilePath() {
+		return targetFilePath;
+	}
 
 	/**
-	 * 対象ファイルのファイル名
+	 * 対象ファイルの配置先
 	 */
-	private String targetFileName;
+	private Path targetFilePath;
 
 	/**
 	 * 対象ファイルの文字コード

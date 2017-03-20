@@ -1,6 +1,7 @@
 package relative_to_absolute_path_html.reader;
 
 import java.nio.charset.Charset;
+import java.nio.file.Paths;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,15 +15,7 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition(null,null,null);
-	}
-
-	@Test
-	public void ディレクトリのパスがnull() {
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("ファイルパス及び文字コードは必須です。");
-
-        new ReadTargetCondition("test", null, Charset.defaultCharset());
+        new ReadTargetCondition(null,null);
 	}
 
 	@Test
@@ -30,7 +23,7 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition(null, "test", Charset.defaultCharset());
+        new ReadTargetCondition(null, Charset.defaultCharset());
 	}
 
 	@Test
@@ -38,6 +31,6 @@ public class ReadTargetConditionTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("ファイルパス及び文字コードは必須です。");
 
-        new ReadTargetCondition("test", "/test/test", null);
+        new ReadTargetCondition(Paths.get("test"), null);
 	}
 }

@@ -79,7 +79,7 @@ public class ConverterImpl implements Converter {
 			return url.toString();
 		} catch (MalformedURLException e) {
 			log.warn("URLの変換に失敗しました。sourceURL:" + sourceUrl.toString() + " targetURL:" + targetUrl, e);
-			return null;
+			return targetUrl;
 		}
 	}
 
