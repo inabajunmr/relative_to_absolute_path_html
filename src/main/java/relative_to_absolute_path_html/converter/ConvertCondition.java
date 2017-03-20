@@ -29,6 +29,7 @@ public class ConvertCondition {
 			defaultTargets.add(new ConvertTarget("a", new ArrayList<>(Arrays.asList("href"))));
 			defaultTargets.add(new ConvertTarget("link", new ArrayList<>(Arrays.asList("href"))));
 			defaultTargets.add(new ConvertTarget("script", new ArrayList<>(Arrays.asList("src"))));
+			defaultTargets.add(new ConvertTarget("img", new ArrayList<>(Arrays.asList("src"))));
 		}
 
 		this.targets = Collections.unmodifiableList(defaultTargets);
