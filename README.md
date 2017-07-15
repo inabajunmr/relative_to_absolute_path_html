@@ -14,6 +14,13 @@ After convert.
 
 ## Usage
 ```
+Converter converter = new ConverterImpl();
+Reader reader = new ReaderImpl();
+
+private final String TEST_FILE_DIR = "src/test/resources/relative_to_absolute_path_html/converter";
+private final String TEST_FILE_NAME = "test.txt";
+
+String htmlStr = reader.read(new ReadTargetCondition(Paths.get(TEST_FILE_DIR, TEST_FILE_NAME), Charset.defaultCharset()));
 String result = converter.convert(htmlStr, new ConvertCondition(new URL("http://test.com/test1/test2/test3/test.html")));
 ```
 
