@@ -9,7 +9,7 @@ Before convert.
 
 After convert.
 ```
-<a href="http:example.com/aaa/bbb/html">
+<a href="http://example.com/aaa/bbb/html">
 ```
 
 ## Usage
